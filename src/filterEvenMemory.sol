@@ -12,7 +12,7 @@ contract Contract {
         uint[] calldata x
     ) external pure returns (uint[] memory) {
         // determine the number of even numbers
-        uint n;
+        uint n; //storage variable for the number of even numbers
         for (uint i = 0; i < x.length; i++) {
             if (x[i] % 2 == 0) n++;
         }
