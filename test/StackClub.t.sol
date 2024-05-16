@@ -26,4 +26,24 @@ contract StackClubTest is Test {
         assertEq(stackClub.isMember(nonMember1), false);
         assertEq(stackClub.isMember(nonMember2), false);
     }
+
+    function testAddAsNonMember() public {
+        vm.startPrank(nonMember1);
+
+        vm.expectRevert();
+        stackClub.addMember(address(6));
+
+        vm.expectRevert();
+        stackClub.removeLastMember();
+    }
+
+    function testRemoveLastMember() public {
+        stackClub.removeLastMember();
+        assertEq(stackClub.isMember(member1), true);
+        assertEq(stackClub.isMember(member2), false);
+
+        stackClub.removeLastMember();
+        assertEq(stackClub.isMember(member1), false);
+        assertEq(stackClub.isMember(member2), false);
+    }
 }

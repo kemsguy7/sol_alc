@@ -21,3 +21,33 @@ contract StackClub {
         members.push(member);
     }
 }
+
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.20;
+
+contract StackClub {
+    address[] members;
+
+    constructor() {
+        members.push(msg.sender); //the deployer is the first member of the array ,this constructor does that
+    }
+
+    function isMember(address member) public view returns (bool) {
+        for (uint i = 0; i < members.length; i++) {
+            if (members[i] == member) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function removeLastMember() external {
+        require(isMember(msg.sender)); // check that the sender is a member
+        members.pop();
+    }
+
+    function addMember(address member) external {
+        require(isMember(msg.sender)); // check that the sender is a member
+        members.push(member);
+    }
+}
