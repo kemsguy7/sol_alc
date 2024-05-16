@@ -14,9 +14,10 @@ contract Contract {
     }
 
     // TODO: create a public state variable: an array of votes
-    Vote[] public votes;
+    Vote none = Vote(Choices(0), address(0));
 
-    Vote public vote;
+    // TODO: create a public state variable: an array of votes
+    Vote[] public votes;
 
     function createVote(Choices choice) external view returns (Vote memory) {
         //Create an external, view function called createVote which takes Choices value as a parameter and returns an instance of type Vote.
@@ -26,5 +27,23 @@ contract Contract {
         // TODO: add a new vote to the array of votes state variable
 
         votes.push(Vote(choice, msg.sender));
+    }
+
+    function findVote(address voter) internal view returns (Vote storage) {
+        for (uint i = 0; i < votes.length; i++) {
+            //if the address of the voter in the array is same with that in this function
+            if (votes[i].voter == voter) {
+                return votes[i];
+            }
+        }
+        return none;
+    }
+
+    function hasVoted(address voter) public view returns (bool) {
+        return findVote(voter).voter == voter; //
+    }
+
+    function findChoice(address voter) external view returns (Choices) {
+        return findVote(voter).choice;
     }
 }
