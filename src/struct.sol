@@ -47,4 +47,11 @@ contract Contract {
     function findChoice(address voter) external view returns (Choices) {
         return findVote(voter).choice;
     }
+
+    function changeVote(Choices choice) external returns (Choices) {
+        // which takes a Choices argument and changes the choice on the existing vote for the msg.sender.
+        Vote storage vote = findVote(msg.sender);
+        require(vote.voter != none.voter); // If they do not have an existing vote, revert the call
+        vote.choice = choice;
+    }
 }
