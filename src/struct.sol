@@ -24,8 +24,9 @@ contract Contract {
         //
         return Vote(choice, msg.sender); //use the Choices value and the msg.sender as the values to create the vote.
 
-        // TODO: add a new vote to the array of votes state variable
+        require(!hasVoted(msg.sender)); //one person can only vote once (the hasvoted function has to be changed to public for this to work, it was external before )
 
+        // TODO: add a new vote to the array of votes state variable
         votes.push(Vote(choice, msg.sender));
     }
 
