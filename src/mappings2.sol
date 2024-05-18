@@ -15,4 +15,16 @@ contract Contract {
 
         users[msg.sender] = User(100, true); // The balance of the new user should be set to 100 and the isActive boolean should be set to true
     }
+
+    function transfer(address to, uint amount) external {
+        // Ensure that both addresses used in the transfer function have active users.
+        require(users[msg.sender].isActive);
+        require(users[to].isActive);
+
+        // Ensure that the msg.sender has enough in their balance to make the transfer without going into a negative balance.
+        require(users[msg.sender].balance >= amount);
+
+        users[msg.sender].balance -= amount;
+        users[to].balance += amount;
+    }
 }
